@@ -12,7 +12,7 @@ L'architecture finale sera la suivante :
 
 Avant de vous lancer, nous allons voir comment faire en sorte que deux conteneurs puissent communiquer ensemble.
 
-- Cloner ce dépôt : `git clone https://github.com/hreymond/VIR/`
+- Cloner ce dépôt (`git clone https://github.com/hreymond/VIR/`) ou simplement mettre à jour le dépôt (`git pull`)
 - Entrer dans le répertoire du TD3 : `cd TD3-multi-containers`
 
 ## Communication entre conteneurs

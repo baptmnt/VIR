@@ -19,13 +19,12 @@ By default, the server is listening on port 5000
 **Prerequisites:**
 
 - PostgreSQL server must be running and accessible at the hostname "postgres"
-- The database `"database"` must exist
 - The user `"postgres"` must exist and have access to the specified database
 
 **Postgresql Configuration:**
 
 Postgres server hostname : "postgres"
-Database : "database"
+Database : "postgres"
 User : "postgres"
 Password : "admin"
 
