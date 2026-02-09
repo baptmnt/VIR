@@ -56,7 +56,7 @@ kubectl cluster-info /* Vous indique l'état du cluster, vous devriez voir
                         et du serveur de metriques. */
 ```
 
-Vous avez compris, que `kubectl` est la CLI d'interaction avec kubernetes. Elle ne dépend pas de k3s, mais de la spécification générale. C'est par cette interface que vous pouvez passez la majorité de vos instructions en ligne de commande. Notez également que nous avons installé la complétion des commande pour kubectl quand vous tapez `kubectl <TAB><TAB>`, vous avez la suggestion des mots clés suivants. 
+Vous avez compris, que `kubectl` est la CLI d'interaction avec kubernetes. Elle ne dépend pas de k3s, mais de la spécification générale. C'est par cette interface que vous pouvez passez la majorité de vos instructions en ligne de commande.
 
 ```
 kubectl get nodes /* Vous indique les noeuds participants à votre cluster */
