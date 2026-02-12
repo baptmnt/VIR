@@ -11,9 +11,9 @@ Ce dépôt contient les sujets de TP de VIR :
 - [TD1-Docker](TD1-docker) Donne les bases sur podman
 - [TD2-Docker](TD2-docker) Fabrication des images
 - [TD3-Multi-conteneurs](TD3-multi-containers) Interaction entre les conteneurs : réseau et docker-compose
-- [TD4-Kubernetes](TD4-kubernetes) Installation et préparation de kubernetes
-- [TD5-Kubernetes-Net](TD5-kubernetes-Net) Exploitation d'un site Web
-- [TD6-Kubernetes-](TD6-kubernetes-Registry) Mise en place du multi-noeuds
+- [TD4-Kubernetes](TD4-Kubernetes) Installation et préparation de kubernetes
+- [TD5-Kubernetes-Net](TD5-Kube-Net) Exploitation d'un site Web
+- [TD6-Kubernetes-](TD6-Kube-Registry) Mise en place du multi-noeuds
 - 
 
 
