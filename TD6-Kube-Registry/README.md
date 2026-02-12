@@ -13,8 +13,9 @@ Si vous souhaitez télécharger cette image vous pouvez passer la commande `podm
 Vous allez fabriquer vos propres images, il va être nécessaire d'exécuter votre propre registry. Voici les étapes
 
 ### Lancer et tester une registry locale
+
 La registry est une application contenerisée. 
-Vous pouvez lancer la version 2 de registry dans une fenêtre avec la commande `podman run`.
+Vous pouvez lancer l'image `registry:2` dans une fenêtre avec la commande `podman run`.
 La registry tourne sur le port conteneur `5000`. Vous pouvez décider de la lancer sur un autre port. 
 
 Vous pouvez vérifier qu'elle s'est bien lancé avec la commandes  
@@ -28,7 +29,7 @@ Une solution simple est de marquer (`tag`) une image existante à votre nom et l
 Lorsque vous allez pousser l'image dans la registry vous allez avoir une erreur https vs http. Il faut modifier votre configuration podman afin de pouvoir déposer des images sans utiliser de protocole sécurisé. Pour cela vous devez modifier votre fichier `/etc/containers/registries.conf` pour y déclarer l'accès non sécurisé à votre registry. Il est inutile de relancer la registry
 
 ```
-#/etc/contaniers/registries.conf
+#/etc/containers/registries.conf
 [[registry]]
 location = "localhost:5010"
 insecure = true
@@ -65,7 +66,7 @@ IP: xx.xx.xx.xx
 
 
 ## Utilisation d'une registry commune
-Kubernetes est une infrastructure de simplifcation du run. Dans l'exemple précédent, la mise à disposition de l'image se fait sur une registry que vous identifiez de manière unique et précise par son IP ou son nom comme localhost. Mais les images sont indépendantes de vos registry. Vous pouvez stocker une image postgres ou whoami sur votre infrastructure. 
+Kubernetes est une infrastructure de simplification du run. Dans l'exemple précédent, la mise à disposition de l'image se fait sur une registry que vous identifiez de manière unique et précise par son IP ou son nom comme localhost. Mais les images sont indépendantes de vos registry. Vous pouvez stocker une image postgres ou whoami sur votre infrastructure. 
 
 Dans cet exercice, nous modifions le descripteur de déploiement afin d'utiliser l'image `maboite.hj/tc/whoami:sfr`. C'est-à-dire votre image précédente mais que vous stockeriez sur une autre registry.
 
