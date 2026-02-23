@@ -185,7 +185,7 @@ En vous appuyant sur le dernier TD, créez une route qui permette d'accéder à 
 
 # Aller plus loin
 
-- Volumes : ajouter un volume au pod `bdd`, pour que les données soient persistées. La gestion des volumes est par nature plus complexe avec Kubernetes, car deux pods qui partagent un volume ne sont pas forcément sur la même machine physique. On pourra regarder du côté des [Volumes Locaux](https://kubernetes.io/fr/docs/concepts/storage/volumes/#local) et des [HostPaths (équivalents de bind mounts dans docker)](https://kubernetes.io/fr/docs/concepts/storage/volumes/#hostpath)
+- Volumes : ajouter un volume au pod `bdd`, pour que les données soient persistées. La gestion des volumes est par nature plus complexe avec Kubernetes, car deux pods qui partagent un volume ne sont pas forcément sur la même machine physique. On pourra regarder du côté des [HostPaths (équivalents de bind mounts dans docker)](https://kubernetes.io/fr/docs/concepts/storage/volumes/#hostpath)
 - CronJob : Mettre en place la sauvegarde de la base de données, comme vous avez pu le faire avec `db-utils` dans le TD3. Pour cela, on utilisera des [Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/), qui permettent de créer un pod à usage unique, qui exécutera une tâche et se stoppera. Pour aller plus loin, on pourra creuser du côté des [CronJobs](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/), qui permettent de prévoir le lancement de Jobs à des dates/périodes prédéfinies.
 
 ## Comment nettoyer k3s 
