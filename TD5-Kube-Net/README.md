@@ -47,6 +47,7 @@ La notion de service permet de fournir une adresse unique sur un replicatSet. En
 
 :warning: Attention, veillez à ne pas redéployer votre pod `elp`.
 En partant de la définition de service de la dernière séance, définissez un service d'accès aux pods `prout`.
+
 :question: comment savoir qu'un service ne trouve pas de pods ?
 
 Corrigez votre service afin qu'il trouve le service `elp`.
