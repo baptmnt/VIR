@@ -228,5 +228,5 @@ curl -H "Host: whoami-gatewayapi2.toto" 10.56.171.180
 
 # Aller plus loin
 
-- [Linux Internals of Kubernetes Networking)(https://www.velotio.com/engineering-blog/linux-internals-of-kubernetes-networking)
+- [Linux Internals of Kubernetes Networking](https://www.velotio.com/engineering-blog/linux-internals-of-kubernetes-networking)
 - [Kubernetes Networking](https://www.youtube.com/playlist?list=PLSAko72nKb8QWsfPpBlsw-kOdMBD7sra-)
