@@ -254,10 +254,13 @@ flowchart LR
       Website:v3
     end
     subgraph Pod2
-      DB@{ shape: cyl, label: "Postgres" }
+      Postgres@{shape: cyl}
+    end
+    subgraph Pod3
+      Registry@{shape: cyl}
     end
     GatewayAPI --> Website:v3
-    Website:v3 <--> DB
+    Website:v3 <--> Postgres
   end
   Client -->|www.monsite.fr-public| GatewayAPI
 ```

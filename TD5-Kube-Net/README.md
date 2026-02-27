@@ -251,10 +251,20 @@ flowchart LR
   subgraph Kubernetes
     direction LR
     GatewayAPI
-    subgraph Pod1
-      nginx:stable
-    end    
-    GatewayAPI --> nginx:stable
+    Service
+    subgraph RS
+      style RS stroke:#f66,stroke-width:4px, stroke-dasharray: 5 10
+      subgraph Pod3
+        nginx:stable:3
+      end 
+      subgraph Pod2
+        nginx:stable:2
+      end   
+      subgraph Pod1
+        nginx:stable:1
+      end
+    end
+    GatewayAPI -- ip uniq (intern) --> Service -- ip (rs)--> nginx:stable:1
   end
-  Client -->|www.monsite.fr-public| GatewayAPI
+  Client -- www.monsite.fr(public) --> GatewayAPI
 ```

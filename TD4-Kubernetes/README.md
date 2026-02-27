@@ -214,3 +214,24 @@ kubectl top pod
 
 crictl ps
 ```
+
+# Architecture
+```mermaid
+flowchart LR
+  subgraph **Kubernetes**
+    direction LR
+    subgraph RS
+      style RS stroke:#f66,stroke-width:4px, stroke-dasharray: 5 10
+      subgraph Pod3
+        nginx:stable:3
+      end 
+      subgraph Pod2
+        nginx:stable:2
+      end   
+      subgraph Pod1
+        nginx:stable:1
+      end
+    end
+    Curl -- ip uniq (intern) --> Service -- ip (rs)--> nginx:stable:1
+  end
+```
