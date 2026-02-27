@@ -244,3 +244,18 @@ curl -H "Host: whoami-gatewayapi2.toto" 10.56.171.180
 
 - [Linux Internals of Kubernetes Networking](https://www.velotio.com/engineering-blog/linux-internals-of-kubernetes-networking)
 - [Kubernetes Networking](https://www.youtube.com/playlist?list=PLSAko72nKb8QWsfPpBlsw-kOdMBD7sra-)
+
+# Architecture
+```mermaid
+architecture-beta
+    group api(cloud)[API]
+
+    service db(database)[Database] in api
+    service disk1(disk)[Storage] in api
+    service disk2(disk)[Storage] in api
+    service server(server)[Server] in api
+
+    db:L -- R:server
+    disk1:T -- B:server
+    disk2:T -- B:db
+```
