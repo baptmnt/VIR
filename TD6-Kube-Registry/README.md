@@ -243,3 +243,21 @@ helm uninstall <xxx>
 helm install <xxx>
 curl -H "Host: whoami-gatewayapi2.toto" 10.56.171.180 
 ```
+
+# Architecture
+```mermaid
+flowchart LR
+  subgraph Kubernetes
+    direction LR
+    GatewayAPI
+    subgraph Pod1
+      Website:v3
+    end
+    subgraph Pod2
+      DB@{ shape: cyl, label: "Postgres" }
+    end
+    GatewayAPI --> Website:v3
+    Website:v3 <--> DB
+  end
+  Client -->|www.monsite.fr-public| GatewayAPI
+```
