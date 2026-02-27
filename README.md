@@ -13,7 +13,7 @@ Ce dépôt contient les sujets de TP de VIR :
 - [TD3-Multi-conteneurs](TD3-multi-containers) Interaction entre les conteneurs : réseau et docker-compose
 - [TD4-Kubernetes](TD4-Kubernetes) Installation et préparation de kubernetes
 - [TD5-Kubernetes-Net](TD5-Kube-Net) Exploitation d'un site Web
-- [TD6-Kubernetes-](TD6-Kube-Registry) Mise en place du multi-noeuds
-- 
+- [TD6-Kubernetes-Reg](TD6-Kube-Registry) Mise en place du multi-noeuds
+  
 
 
