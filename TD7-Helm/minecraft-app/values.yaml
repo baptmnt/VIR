@@ -1,0 +1,15 @@
+# Default values for our chart
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Deployment variables
+replicaCount: 1
+image:
+  repository: localhost:5000
+  namespace: tc
+  name: website
+  tag: v3
+
+# Route variables
+route:
+  hostname: "minecraft.localhost"
