@@ -237,7 +237,7 @@ Comme d'habitude, n'hésitez pas à appeler votre chargé de TD si vous avez des
 
 Maintenant que notre Chart Helm fonctionne, la prochaine étape consiste à partager ce chart en le déposant sur un dêpot public, ou d'entreprise.
 
-Pour cette partie, formez des binômes : vous allez tester de déployer le chart Helm de votre binôme sur votre cluster.  
+Pour cette partie, formez des binômes : vous allez déployer le chart Helm de votre binôme sur votre cluster.  
 
 ## Packager une Chart Helm
 
