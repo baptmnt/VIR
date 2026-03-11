@@ -30,7 +30,8 @@ Pour l'installation, nous vous suggérons de lancer une console `k9s` dans une f
 
 Vous pouvez vérifier que le service fonctionne en demandant les metriques actuellement scrappées. Si votre port-forward tourne. 
 
-`curl http://localhost:9090/api/v1/label/__name__/values
+`curl http://localhost:9090/api/v1/label/__name__/values | jq`
+Normalement vous ne voyez pas de métriques liées à Traefik.
 
 :question: Pouvez-vous faire le même contrôle sans le port-forward activé ?   
 :question: Pouvez-vous accéder à ce port-forward d'une autre machine de la salle ? Tester avec le navigateur de votre voisin. (ps : la réponse est oui)
@@ -48,15 +49,40 @@ Toutefois le moniteur de traefik n'est pas découvert, il faut une positionner u
 La ligne du script `kubectl label servicemonitor traefik release=prometheus` se charge de cela.
 
 
+Vous pouvez maintenant tester votre installation  : 
+- Mise à disposition de la route par traefik : `kubectl get services`, puis `curl <xxx.yyy>:9100/metrics`
+- Intégration du service monitor de traefik dans prometheus (en gros collecte de la route metrics) : `curl http://<www.zzz>:9090/api/v1/label/__name__/values |jq|grep traefik
+
+Si les métrique traefik sont exposées dans prometheus, vous pouvez maintenant les visualiser dans grafana.
 
 
+# Visualisation
+Pour accéder à grafana, vous devez auparavant ouvrir les accès :
+
+-  Récupérer le mot de passe admin : `kubectl get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo`
+-  Faire un port-forward sur le pod grafana `kubectl port-forward prometheus-grafana-654869cd-mn8qq 3000:3000`
+-  Y accéder localement via firefox ou sur une autre machine avec un tunnel ssh : ssh -L 3000:localhost:3000 <monPoteIP>
+
+Grafana, Kibana, sont les mêmes outils de visualisation de métriques et de surveillance d'alertes. Pour cette installation nous avons supprimé tous les `dashboards` de surveillance. Quand vous allez vous connecter dans Grafana vous ne verrez pas grand chose. 
+- Vous pouvez explorer les metriques collectées : menu->explore, sélectionner une metrique et faites `run query`. Normalement la magie opère. Vous pouvez choisir des metriques de mesure de cpu par exemple.
+
+Si vous commencez à voir quelque chose, vous pouvez installer un dashboard, ou en créer un, si vous êtes aventurier ou explorateur. 
+Nous avons déposé sur la clé un dashboard json `dashboard-grafana-17346_rev9.json` permettant de visualiser les  métriques traefik.
 
 
-Après avoir démarré votre machine, vous pouvez installer la nouvelle version de traefik fourni sur la clé. L'installation est modifiée, car pour que trafik puisse être surveillé par **prometheus** il faut qu'il déclare un objet **servicemonitor** dont la déclaration est fournie par prometheus... Nous avons donc un soucis d'œuf et de poule.   De plus nous souhaitons installer des versions minimales de nos infrastructures. Enfin, le **servicemonitor** installé par traefik respecte bien la spécification de prometheus, mais se déclare mal... En effet il devrait déclarer un **label** spécifique qui n'est pas positionné.   
-Le script `/home/user/startTraefik.sh` corrige ces deux soucis. 
+Normalement vous pouvez consulter le dashboard traefik qui est... toujours vide, a part la zone indiquant les instances traefik qui devrait être à 1.
 
-1. Lancer le script
-2. Vérifier les éléments suivants : 
+# Et si on testait la charge ?
+Sur votre machine ou sur une autre, vous pouvez tester : 
+
+ab -n 10000 -c 300 -H "Host: minecraft.localhost" "http://<monPoteIp>/display_skin?username=toto"
+
+N'oubliez pas de recharger la page grafana, pour voir les métrique se mettre à jour plus rapidement. 
+
+
+## Voilà la mise en place d'une infrastructure de supervision est terminée... Ou ce n'est que le début.
+
+
   - La commande `kubectl get servicemonitors.monitoring.coreos.com`. Trouve bien un servicemonitor pour traefik.
       ```
       NAME      AGE
@@ -74,30 +100,5 @@ Le script `/home/user/startTraefik.sh` corrige ces deux soucis.
               release=prometheus   <--- ICI
       Annotations:  meta.helm.sh/release-name: traefik
       ...
-      ``` 
-
-Si tout est ok, traefik met à disposition une route metrics que vous pouvez consulter localement et à distance. Pour consulter localement, vous pouvez ouvrir le port de la manière suivante, en adaptant les numéros du pod. 
-`kubectl port-forward traefik-<xxx>-<yyy> 9100:9100` 
-
-Vous pouvez tester votre accès dans une autre fenêtre avec `curl localhost:9100/metrics`. Vous devez voir des 'traefikxxxx' dans les dernières metrics.
-
-:question: Savez-vous rendre disponible cette accès aux machines externes ?
-
-
-Si tout se passe bien, prometheus sais maitenant détecter automatiquement votre fournisseur de metriques. Car il déclare un service monitor contenant un label `release=prometheus`. Il reste donc à installer prometheus et vérifier cela. 
-
-
-
-
-
-
-
-1. Prérequis : 10GB$
-2. Réseau : ./startnet.sh
-3. Démarrer un serveur k3s : ./startk3sServer.sh
-4. Passer admin : sudo su -
-5. Toujours faire un : export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-6. Lancer k9s : k9s
- . ./startTraefik.sh
-   
+      ```   
 
