@@ -73,8 +73,14 @@ Nous avons déposé sur la clé un dashboard json `dashboard-grafana-17346_rev9.
 Normalement vous pouvez consulter le dashboard traefik qui est... toujours vide, a part la zone indiquant les instances traefik qui devrait être à 1.
 
 # Et si on testait la charge ?
-Sur votre machine ou sur une autre, vous pouvez tester : 
+Après avoir installé le chart de l'application, 
+```
+cd minecraft-app-chart
+helm install minecraft .
+````
+vérifiez que l'application fonctionne. 
 
+Sur votre machine ou sur une autre, vous pouvez tester : 
 ab -n 10000 -c 300 -H "Host: minecraft.localhost" "http://<monPoteIp>/display_skin?username=toto"
 
 N'oubliez pas de recharger la page grafana, pour voir les métrique se mettre à jour plus rapidement. 
