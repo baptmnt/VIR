@@ -69,13 +69,12 @@ Grafana, Kibana, sont les mêmes outils de visualisation de métriques et de sur
 Si vous commencez à voir quelque chose, vous pouvez installer un dashboard, ou en créer un, si vous êtes aventurier ou explorateur. 
 Nous avons déposé sur la clé un dashboard json `dashboard-grafana-17346_rev9.json` permettant de visualiser les  métriques traefik.
 
-
 Normalement vous pouvez consulter le dashboard traefik qui est... toujours vide, a part la zone indiquant les instances traefik qui devrait être à 1.
 
 # Et si on testait la charge ?
 Après avoir installé le chart de l'application, 
 ```
-cd minecraft-app-chart
+cd /opt/minecraft-app-chart/
 helm install minecraft .
 ````
 vérifiez que l'application fonctionne. 
