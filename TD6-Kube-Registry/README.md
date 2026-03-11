@@ -10,12 +10,12 @@ Par exemple lorsque vous récupérez l'image `traefik/whoami`, de la session pr�
 `https://hub.docker.com/r/traefik/whoami`.
 
 Si vous souhaitez télécharger cette image vous pouvez passer la commande `podman pull <image>` comme indiqué sur le site.
-:collision: Pullez l'image `traefik/whoami` (:question: Quel tag est récupéré ?)
-Vous allez fabriquer vos propres images, il va être nécessaire d'exécuter votre propre registry. Voici les étapes
+Pullez l'image `traefik/whoami` ( :question: Quel tag est récupéré ?)
+Vous allez fabriquer vos propres images, il va être nécessaire d'exécuter votre propre registry.
 
 ### Lancer et tester une registry locale
 
-La registry est une application contenerisée. 
+La registry est une application conteneurisée. 
 Vous pouvez lancer l'image `registry:2` dans une fenêtre avec la commande `podman run`.
 La registry tourne sur le port conteneur `5000`. Vous pouvez décider de la lancer sur un autre port. 
 
@@ -37,26 +37,25 @@ insecure = true
 ```
 
 Vous pouvez pousser votre image
-`podman push <url>/<ns>/<image>:<tag>`
+- `podman push <url>/<ns>/<image>:<tag>`
 
 Et vérifier que l'image est dans votre registry
 
-`curl <url>/v2/_catalog`
-`curl <url>/v2/<ns>/<image>/tags/list`
+- `curl <url>/v2/_catalog`
+- `curl <url>/v2/<ns>/<image>/tags/list`
 
 ## Utiliser cette registry dans Kubernetes
 
 Définissez un service `testwho` et un déploiement reposant sur l'image que vous venez de pousser. 
 Dans votre yaml, doit apparaitre une spécification de la forme :
-````
-...
+```
 containers: 
 - name: whoami
   image: <url>/<image>
 ```
 
 Déployez les pods et le service / testez avec la commande suivante : 
-`curl `kubectl describe service testwho | grep 'IP:'| cut -d ':' -f 2``
+`curl kubectl describe service testwho | grep 'IP:'| cut -d ':' -f 2`
 
 La réponse doit être du style :
 ```
@@ -118,7 +117,7 @@ Si vous souhaitez être guidé dans cette tâche, nous avons détaillé les gran
 Créer un déploiement pour héberger deux réplicats de notre site :
 
 - Si nécessaire, reconstruire l'image `website:v3`
-- Tagger l'image, et la pousser dans le registry créée précédemment
+- Tagger l'image, et la pousser dans la registry créée précédemment
 - Créer le déploiement correspondant à notre site (image website:v3, deux réplicats)
 
 Tester le déploiement :
