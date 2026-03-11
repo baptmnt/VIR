@@ -1,6 +1,6 @@
 services:
   website:
-    image: website:v3
+    image: hreymond/website:cpustress
     ports:
       - "5010:5000"
     depends_on:

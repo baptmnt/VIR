@@ -4,6 +4,9 @@ import os
 import urllib.request, urllib.error, json
 import psycopg2
 
+# For latency/stress versions of the image
+import time, random, sys
+
 app = Flask(__name__)
 
 app.logger.info("Connecting to postgres database")
@@ -101,7 +104,17 @@ def update_query_count(username) -> int:
     username = (username or "").strip()
     if not username:
         return 0
-
+    
+    t = time.time()
+    CPU_STRESS_MS = 2000
+    load = 0
+    for i in range(0, CPU_STRESS_MS):
+        for j in range(0,4000):
+            load = i + j
+    delta_t = time.time() - t 
+    print(f"Fake computation took {delta_t*1000:2f} ms", file=sys.stderr)
+    
+    
     conn = get_db_connection()
     nb_query = None
     with conn.cursor() as cur:
