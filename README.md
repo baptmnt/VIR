@@ -14,6 +14,9 @@ Ce dépôt contient les sujets de TP de VIR :
 - [TD4-Kubernetes](TD4-Kubernetes) Installation et préparation de kubernetes
 - [TD5-Kubernetes-Net](TD5-Kube-Net) Exploitation d'un site Web
 - [TD6-Kubernetes-Reg](TD6-Kube-Registry) Mise en place d'une registry docker
-  
+- [TD7-Helm](TD7-Helm) Usages de Helm
+- [TD8-Supervision](TD8-Supervision) Supervision d'infra Kube
+- [TD9-CICD](TD9-CICD)Les tuyaux de prod/build/run
+- [TD10-Projet](TD10-Projet) Projet d'intégration final
 
 
