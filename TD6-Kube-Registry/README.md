@@ -54,8 +54,9 @@ containers:
   image: <url>/<image>
 ```
 
-Déployez les pods et le service / testez avec la commande suivante : 
-`curl kubectl describe service testwho | grep 'IP:'| cut -d ':' -f 2`
+Déployez les pods et le service / testez :
+- Récupérez l'IP de votre service avec la commande `kubectl describe`
+- Faites un curl de cette ip
 
 La réponse doit être du style :
 ```
