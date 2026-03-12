@@ -85,15 +85,33 @@ ab -n 10000 -c 300 -H "Host: minecraft.localhost" "http://<monPoteIp>/display_sk
 N'oubliez pas de recharger la page grafana, pour voir les métrique se mettre à jour plus rapidement. 
 
 
-## Voilà la mise en place d'une infrastructure de supervision est terminée... Ou ce n'est que le début.
+La mise en place d'une infrastructure de supervision est terminée... Ou ce n'est que le début.
 
+# Pour la suite
+Comme nous vous l'avions indiqué la configuration d'un cluster de run 24/7 se fait par des l'intermédiaire de 100 aines de fichiers de configuration. C'est parfaitement similaire aux configuration d'infrastructure réseau. Il s'agit d'une convergence majeure de services.  
+La maitrise des configurations est un réel challenge pour l'avenir, il sera certainement simplifié via des IAg, des outils de check et des surlangages. En tant qu'experts vous pouvez maitriser les commandes de base nécessaires aux premiers débug. 
 
-  - La commande `kubectl get servicemonitors.monitoring.coreos.com`. Trouve bien un servicemonitor pour traefik.
+Ce TD est l'exemple typique du TD qui prend 5 min à installer intégralement et aveuglément, mais peut prendre des semaines à installer selon une configuration précise. Dans le premier cas, vous allez aller très vite et prendre beaucoup de place, et beaucoup de charge, dans le second vous risquer de ne pas atteindre vos objectifs de déployement. A vous de voir l'energie à passer dans ce type de projet.
+
+En résumé ce td se résumé à démarrer quatre commandes : 
+ - k3s start server   
+ - helm install prometheus kube-prometheus-stack   
+ - helm install traefik traefik/traefik   
+ - helm install minecraft .   
+
+Ces quelques commandes déclanchent quelques 100aines de milliers de lignes de code et autant de paramètres de configuration. 
+
+Si vous lancez uniquement ces lignes, vous verrez de nombreuses erreur de configuration. Pour vous entrainer, n'hésitez pas à essayer de les repérer et les corriger... La correction est donnée dans les fichiers <start..> que vos enseignants ont validé pour vous. 
+
+# Liste des commandes utilisées
+Voici les quelques commandes bien utiles pour corriger les configurations. 
+
+- La commande `kubectl get servicemonitors.monitoring.coreos.com`. Trouve bien un servicemonitor pour traefik.
       ```
       NAME      AGE
       traefik   48s
       ```
-  - La commande `kubectl describe servicemonitors.monitoring.coreos.com`. Affiche bien un label `release=prometheus`.
+- La commande `kubectl describe servicemonitors.monitoring.coreos.com`. Affiche bien un label `release=prometheus`.
       ```
       Name:         traefik
       Namespace:    default
@@ -105,5 +123,15 @@ N'oubliez pas de recharger la page grafana, pour voir les métrique se mettre à
               release=prometheus   <--- ICI
       Annotations:  meta.helm.sh/release-name: traefik
       ...
-      ```   
+      ```
+
+- La commande `helm show value <repository/chartname> > Value.yaml` est utile pour extraire les valeurs possibles du charts. Vous pouvez ne conserver que les valeurs qui vous intéressent, puis lancer l'installation de votre chart en passant ce fichier de valeurs avec la commande :  `helm install <tag> <repository/chartname> -f ./mesValeurs.yaml`. Cette technique est utilisée pour l'installation de prometheus dans le script startPrometheus. 
+
+- La commande `helm search repo <repository>` affiche les charts d'un repository. Bien utile pour les repository communautaires comme prometheus-community.
+
+# Références
+ https://locust.io/ -> Pour la montée en charge
+ https://gist.github.com/rxaviers/7360908
+
+:ok: si vous voyez des bugs dans le sujet, n'hésitez-pas à nous prévenir !!!
 
