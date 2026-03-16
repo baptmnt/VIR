@@ -113,7 +113,7 @@ Il est courant d'avoir à mettre à jour une Release, pour changer la configurat
 
 Une solution naïve consiste à réinstaller la Release :
 - Désinstallez la release `toto` : `helm uninstall toto`
-- Installation à nouveau la release, avec 4 réplicas: `helm install toto --set replicaCount=4`
+- Installation à nouveau la release, avec 4 réplicas: `helm install toto helm-app --set replicaCount=4`
 
 Cette méthode est assez brutale : on supprime toutes les ressources Kubernetes (pods, services, ...), et notre site devient indisponible, jusqu'à ce que la nouvelle release soit créée. De plus, en cas d'erreur, le retour en arrière peut être complexe.
 
