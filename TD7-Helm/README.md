@@ -241,7 +241,7 @@ Pour cette partie, formez des binômes : vous allez déployer le chart Helm de v
 
 ## Packager une Chart Helm
 
-Helm dispose d'une commande pour packager un Chart en une archive `.tar`: `helm template <Chart Folder>`.
+Helm dispose d'une commande pour packager un Chart en une archive `.tar`: `helm package <Chart Folder>`.
 
 Utilisez cette commande pour packager votre Chart `minecraft-app`. 
 
