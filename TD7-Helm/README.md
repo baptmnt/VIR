@@ -113,7 +113,7 @@ Il est courant d'avoir à mettre à jour une Release, pour changer la configurat
 
 Une solution naïve consiste à réinstaller la Release :
 - Désinstallez la release `toto` : `helm uninstall toto`
-- Installation à nouveau la release, avec 4 réplicas: `helm install toto --set replicaCount=4`
+- Installation à nouveau la release, avec 4 réplicas: `helm install toto helm-app --set replicaCount=4`
 
 Cette méthode est assez brutale : on supprime toutes les ressources Kubernetes (pods, services, ...), et notre site devient indisponible, jusqu'à ce que la nouvelle release soit créée. De plus, en cas d'erreur, le retour en arrière peut être complexe.
 
@@ -205,12 +205,12 @@ Modifiez le template `httproute.yaml` du chart helm-app pour paramétrer le nom 
 
 Mettre à jour vos release de `helm-app` pour utiliser des noms d'hôtes différents : `toto.localhost` et `totov2.localhost`.
 
-# Partie 2 - Packager notre application
+# Partie 2 - Transformer une configuration Kubernetes en Chart Helm
 
 Dans le dossier `minecraft-app`, nous avons fourni la structure d'un chart Helm pour le site minecraft présenté dans les TDs précédents.
 
 Ce chart est incomplet. Nous avons simplement fait en sorte de générer des labels/sélecteurs propre à chaque release. C'est à vous de: 
-- Modifier les noms des déploiements, des services, de la httpRoute pour qu'il soient unique pour chaque release. Attention, il faudra modifier les références à ses noms, s'il en existe. En particulier, le site utilisait le nom de domaine "postgres" pour ce connecter à la base de donnée. Désormais, une variable d'environnement "DB_HOSTNAME" est définie dans le déploiement. Cette variable devra correspondre au nom d'hôte du service lié à la BDD.
+- Modifier les noms des déploiements, des services, de la httpRoute pour qu'ils soient unique pour chaque release. Attention, il faudra modifier les références à ses noms, s'il en existe. En particulier, le site utilisait le nom de domaine "postgres" pour ce connecter à la base de donnée. Désormais, une variable d'environnement "DB_HOSTNAME" est définie dans le déploiement. Cette variable devra correspondre au nom d'hôte du service lié à la BDD.
 - Ajouter les paramètres définis dans `values.yaml` aux templates Kubernetes.
 
 Pour tester vos configurations, il existe la commande `helm template <release> <chart>`, qui permet de visualiser les descripteurs Yaml une fois les balises remplacées.
@@ -219,7 +219,47 @@ Pour éviter d'avoir à relancer une registry locale, vous pouvez utiliser une i
 
 :question: Dans le cas de cette image, sauriez vous identifier son *registry*, son *namespace*, son nom et son tag ?
 
+L'objectif est de concevoir un chart qui permette de créer deux releases `minecraft1` et `minecraft3` :
+- `minecraft1` possède un seul réplica du pod `website`, et écoute sur l'url `minecraft.localhost`
+  - `helm install minecraft1 ./minecraft-app --set replicaCount=1 --set route.hostname="minecraft.localhost"`
+- `minecraft3` possède trois réplicas du pod `website` et écoute sur l'url `mc.localhost`
+  - `helm install minecraft3 ./minecraft-app --set replicaCount=3 --set route.hostname="mc.localhost"`
+
+Pour tester votre Chart, pensez à vérifier :
+- Est-ce que je peux déployer deux instances du même Chart (`minecraft1` et `minecraft2`) ? Si non, est-ce que mes noms d'objets Kubernetes sont bien différents ?
+- Est-ce que je peux visualiser mes ressources avec kubectl ou k9s ? Est-ce qu'elles correspondent bien à ce que j'attends : bon nombre de pods ? bon nommage des ressources ?
+- Est-ce que je peux accéder à mon site via son IP/URL ? 
+- Est-ce que le site fonctionne ? Testez avec un pseudo comme `Aypierre` par exemple.
+
 Comme d'habitude, n'hésitez pas à appeler votre chargé de TD si vous avez des questions.
+
+# Partie 3 - Packager et partager notre application
+
+Maintenant que notre Chart Helm fonctionne, la prochaine étape consiste à partager ce chart en le déposant sur un dêpot public, ou d'entreprise.
+
+Pour cette partie, formez des binômes : vous allez déployer le chart Helm de votre binôme sur votre cluster.  
+
+## Packager une Chart Helm
+
+Helm dispose d'une commande pour packager un Chart en une archive `.tar`: `helm package <Chart Folder>`.
+
+Utilisez cette commande pour packager votre Chart `minecraft-app`. 
+
+:question: De quoi est constitué le nom de l'archive ? Que contient-elle ?
+
+## Partager un package Helm
+
+Podman dispose de la commande `podman push` pour publier des images docker dans une registry distante.
+De la même manière, Helm dispose d'une commande `push` permettant de publier un package Helm (notre archive `.tar.gz`) vers une registry Helm.
+
+Dans le cadre du TD, pour des raisons de simplicité, on simulera cette étape de `push`. On rendra notre package helm disponible avec `filesender`, un dêpot de fichier mis à disposition de l'enseignement supérieur.
+
+- Identifiez-vous sur la page `filesender.renater.fr` (icône en forme de personne, le plus à droite). Si c'est votre première connexion sur Renater, un écran "Sélectionnez votre établissement" s'affiche. Cherchez INSA Lyon, validez.
+- Déposez votre fichier `minecraft-1.0.0.tar.gz`, vous obtiendrez alors un lien de téléchargement. Ouvrez ce lien dans un nouvel onglet, vous arrivez sur une page `Télécharger`.  Cliquez-droit sur le bouton `Téléchargement`, copier le lien. Partagez ce lien à votre binôme. 
+
+Votre binôme devrait pouvoir installer votre Chart avec la commande suivante :
+
+- `helm install <NOM RELEASE> '<URL>'` :warning: Les simple quotes `'` sont essentiels pour que bash n'interprète pas le caractère `&` de l'url comme l'opérateur qui permet d'exécuter une commande en arrière plan.
 
 # Liens
 
