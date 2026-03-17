@@ -94,9 +94,15 @@ Sur votre machine ou sur une autre, vous pouvez tester :
 `curl -H "Host: minecraft.localhost" "http://<monPoteIp>/`
 
 Puis générer de la charge
-`ab -n 10000 -c 300 -H "Host: minecraft.localhost" "http://<monPoteIp>/display_skin?username=toto"`
+`ab -n 10000 -c 10 -s 50000 -H "Host: minecraft.localhost" "http://<monPoteIp>/display_skin?username=toto"`
 
-N'oubliez pas de recharger la page grafana, pour voir les métriques se mettre à jour plus rapidement. 
+Laissez tourner le site quelques temps. N'oubliez pas de recharger la page grafana, pour voir les métriques se mettre à jour plus rapidement. 
+
+:question: Combien de requêtes notre site peut traiter par seconde ?  Note : le chart `minecraft` démarre avec deux pods `web` par défaut.
+
+- Mettre à jour le nombre de pods de votre release helm : `helm upgrade minecraft . --set replicaCount=4`. Attendez quelques minutes que le nouveau déploiement soit effectif, et que les métriques Prometheus soit mises à jour.
+
+:question: Quel est l'effet de l'augmentation du nombre de pod ?
 
 La mise en place d'une infrastructure de supervision est terminée... Ou ce n'est que le début.
 
