@@ -104,6 +104,8 @@ Laissez tourner le site quelques temps. N'oubliez pas de recharger la page grafa
 
 :question: Quel est l'effet de l'augmentation du nombre de pod ?
 
+:question: Quel est le nombre de pods adaptés à la charge générée par `ab` ? Testez plusieurs valeurs de `replicaCount` et concluez
+
 La mise en place d'une infrastructure de supervision est terminée... Ou ce n'est que le début.
 
 # Pour la suite
