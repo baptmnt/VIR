@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: v4
+description: A small website to display the head skin of a minecraft player
+name: minecraft
+type: application
+version: 0.1.0

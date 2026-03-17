@@ -5,12 +5,11 @@
 # Deployment variables
 replicaCount: 1
 image:
-  name: nginx
-  tag: stable
+  repository: docker.io
+  namespace: hreymond
+  name: virwebsite
+  tag: v4
 
-# Service variables
-service:
-  port: 80
-
+# Route variables
 route:
-  hostname: "monsupersite.localhost"
+  hostname: "minecraft.localhost"

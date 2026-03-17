@@ -3,14 +3,12 @@
 # Declare variables to be passed into your templates.
 
 # Deployment variables
-replicaCount: 1
+replicaCount: 4
 image:
   name: nginx
-  tag: stable
+  tag: fauxLabel
 
 # Service variables
 service:
   port: 80
 
-route:
-  hostname: "monsupersite.localhost"
