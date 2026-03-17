@@ -1,0 +1,95 @@
+# Simple application with service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mc
+  template:
+    metadata:
+      labels:
+        app: mc
+    spec:
+      containers:
+      - name: mc
+        image: maboite.hj/tc/website:v3
+        ports:
+        - containerPort: 5000
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smc
+spec:
+  selector:
+    app: mc
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bdd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bdd
+  template:
+    metadata:
+      labels:
+        app: bdd
+    spec:
+      containers:
+      - name: bdd
+        env:
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: admin
+          - name: POSTGRES_DB
+            value: postgres
+        
+        image: docker.io/postgres:16
+        ports:
+        - containerPort: 5432
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: bdd
+  ports:
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP
+
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: hmc
+spec:
+  parentRefs:
+    - name: traefik-gateway
+  hostnames:
+    - "mc-gatewayapi.localhost"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: smc
+          port: 80

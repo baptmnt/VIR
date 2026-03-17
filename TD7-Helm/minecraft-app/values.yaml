@@ -5,10 +5,10 @@
 # Deployment variables
 replicaCount: 1
 image:
-  repository: docker.io
-  namespace: hreymond
-  name: virwebsite
-  tag: v4
+  repository: localhost:5000
+  namespace: tc
+  name: website
+  tag: v3
 
 # Route variables
 route:

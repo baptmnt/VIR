@@ -1,0 +1,18 @@
+# Simple application with service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: steph-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prf
+  template:
+    metadata:
+      labels:
+        app: prf
+    spec:
+      containers:
+      - name: web
+        image: nginx:1.19
