@@ -14,7 +14,7 @@
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
-helm install prometheus prometheus-community/kube-prometheus-stack -f /home/user/prometheus-simple.yaml
+helm install prometheus prometheus-community/kube-prometheus-stack -f prometheus-simple.yaml
 
 #kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 9090:9090
 
